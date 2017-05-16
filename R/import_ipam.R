@@ -40,5 +40,8 @@ import_ipam <- function(dir, ipam.pattern="*.csv", info.pattern="*ids.txt") {
   # Merge all data frames together
   result <- do.call(rbind, mget(basenames))
   rownames(result) <- NULL  # gets rid of rownames
+
+  # Return final data frame
+  return(result)
 }
 
