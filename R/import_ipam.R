@@ -1,7 +1,13 @@
 import_ipam <- function(dir, ipam.pattern="*.csv", info.pattern="*ids.txt") {
   ipam <- list.files(path=dir, pattern=ipam.pattern, full.names=TRUE)
-  info <- list.files(path=dir, pattern=info.pattern, full.names=TRUE)
   basenames <- gsub("\\..*$", "", basename(ipam))
+  if (!is.null(info.pattern)) {
+    info <- list.files(path=dir, pattern=info.pattern, full.names=TRUE)
+  } else {
+    info <- NULL
+  }
+
+
 
   # Read in each file
   for (i in 1:length(ipam)) {
@@ -20,8 +26,10 @@ import_ipam <- function(dir, ipam.pattern="*.csv", info.pattern="*ids.txt") {
     df3 <- reshape2::dcast(na.omit(df2), AOI ~ var)
 
     # Read in sample names from ids file
-    nm <- read.table(info[1])
-    colnames(nm) <- "ID"
+    if (!is.null(info)) {
+      nm <- read.table(info[1])
+      colnames(nm) <- "ID"
+    }
 
     # Merge data with IDs and assign to global environment
     df4 <- data.frame(nm, df3)
