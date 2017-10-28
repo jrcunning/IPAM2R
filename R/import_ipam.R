@@ -25,7 +25,7 @@ import_ipam <- function(dir, ipam.pattern="*.csv", info.pattern="*ids.txt") {
 
     # Read in sample names from ids file (if provided) and merge data
     if (!is.null(info)) {
-      nm <- read.table(info[1])
+      nm <- read.table(info[i])
       colnames(nm) <- "ID"
       df4 <- data.frame(nm, df3)
     } else {
